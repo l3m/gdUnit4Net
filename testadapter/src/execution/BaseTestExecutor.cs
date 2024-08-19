@@ -84,6 +84,14 @@ internal abstract class BaseTestExecutor
             currentDir = currentDir.Parent;
         }
 
+        var dirFromEnv = Environment.GetEnvironmentVariable("GDUNIT_GODOT_PROJECT_DIR");
+        if (dirFromEnv != null)
+        {
+            var dirFromEnvInfo = new DirectoryInfo(dirFromEnv);
+            if (dirFromEnvInfo.EnumerateFiles("project.godot").Any())
+                return dirFromEnvInfo.FullName;
+        }
+
         return null;
     }
 }
